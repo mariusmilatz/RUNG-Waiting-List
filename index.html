@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RUNG — Sparen, das sich wie Gewinnen anfühlt</title>
+<meta name="description" content="RUNG ist die App, die das Sparen umdreht: Du trackst, was du NICHT ausgegeben hast – und siehst, wie daraus über Jahre ein Vermögen wächst. Kein Budget, keine Tabelle. Jetzt auf die Warteliste.">
+
+<!-- Social share card (WhatsApp, Instagram, iMessage previews) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="RUNG — Sparen, das sich wie Gewinnen anfühlt">
+<meta property="og:description" content="Kein Budget, keine Tabelle. Tracke deine kleinen Sparsiege und sieh, wie dein Geld wächst. Sichere dir deinen frühen Zugang.">
+<meta property="og:image" content="assets/rung-mark.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/rung-mark.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#F4F2EC;
+    --paper-2:#EDEAE1;
+    --ink:#0A0A0A;
+    --muted:#6C6A63;
+    --card:#FFFFFF;
+    --line:rgba(10,10,10,.10);
+    --accent:#1F7A4D;      /* the app's "positive / saved" green, used sparingly */
+    --accent-soft:#E7F1EA;
+    --radius:18px;
+    --maxw:640px;
+    --font:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font);
+    font-size:17px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    padding:0 22px calc(48px + env(safe-area-inset-bottom));
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto}
+
+  /* ---------- Header ---------- */
+  header{display:flex;justify-content:center;padding:34px 0 8px}
+  header img{height:26px;width:auto}
+
+  /* ---------- Hero ---------- */
+  .hero{text-align:center;padding:26px 0 8px}
+  .mark{height:104px;width:auto;margin:2px auto 22px;display:block}
+  .badge{
+    display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:6px 13px;margin-bottom:18px;
+  }
+  h1{
+    font-size:clamp(30px,7.6vw,46px);line-height:1.08;font-weight:800;letter-spacing:-.02em;margin:0 0 16px;
+  }
+  h1 .u{position:relative;white-space:nowrap}
+  h1 .u::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.34em;background:var(--accent-soft);z-index:-1;border-radius:3px}
+  .lede{font-size:18px;color:var(--muted);max-width:520px;margin:0 auto 6px}
+
+  /* ---------- Signup card ---------- */
+  .signup{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:30px auto 0;box-shadow:0 12px 34px rgba(10,10,10,.06)}
+  .signup h2{font-size:19px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
+  .signup p.sub{font-size:14.5px;color:var(--muted);margin:0 0 16px}
+  form{display:flex;flex-direction:column;gap:10px}
+  .row{display:flex;gap:10px}
+  @media(max-width:480px){.row{flex-direction:column}}
+  input[type=email]{
+    flex:1;font-family:var(--font);font-size:16px;padding:15px 16px;border-radius:13px;
+    border:1.5px solid var(--line);background:var(--paper);color:var(--ink);outline:none;transition:border-color .15s,background .15s;min-width:0;
+  }
+  input[type=email]:focus{border-color:var(--ink);background:#fff}
+  input[type=email]::placeholder{color:#9b998f}
+  button.cta{
+    font-family:var(--font);font-size:16px;font-weight:800;letter-spacing:-.01em;cursor:pointer;
+    padding:15px 22px;border-radius:13px;border:0;background:var(--ink);color:#fff;white-space:nowrap;transition:transform .08s,opacity .15s;
+  }
+  button.cta:hover{opacity:.9}
+  button.cta:active{transform:scale(.98)}
+  button.cta:disabled{opacity:.55;cursor:default}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}  /* honeypot */
+  .msg{font-size:14px;margin:12px 2px 0;min-height:1px}
+  .msg.err{color:#b23b3b}
+  .privacy{font-size:12.5px;color:var(--muted);margin:14px 2px 0;line-height:1.5}
+  .privacy a{color:var(--muted)}
+
+  /* success state */
+  .success{display:none;text-align:center;padding:6px 4px}
+  .success .tick{width:52px;height:52px;border-radius:999px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:800;margin:2px auto 14px}
+  .success h2{font-size:20px;margin:0 0 6px}
+  .success p{color:var(--muted);font-size:15px;margin:0 auto;max-width:400px}
+  .signup.done form,.signup.done .privacy,.signup.done>h2,.signup.done>p.sub{display:none}
+  .signup.done .success{display:block}
+
+  /* secondary TestFlight cta */
+  .tf{display:none;text-align:center;margin:16px auto 0}
+  .tf a{font-size:14.5px;font-weight:700;color:var(--ink);text-decoration:none;border-bottom:2px solid var(--accent-soft);padding-bottom:1px}
+
+  /* ---------- Projection teaser ---------- */
+  .calc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:40px auto 0}
+  .calc .eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+  .calc h3{font-size:18px;font-weight:800;margin:0 0 16px;letter-spacing:-.01em}
+  .calc label{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;color:var(--muted);margin-bottom:8px}
+  .calc label b{font-size:17px;color:var(--ink);font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:999px;background:var(--paper-2);outline:none;margin:2px 0 18px}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:999px;background:var(--ink);cursor:pointer;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+  input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:999px;background:var(--ink);cursor:pointer;border:3px solid #fff}
+  .result{background:var(--accent-soft);border-radius:13px;padding:16px 18px;text-align:center}
+  .result .big{font-size:clamp(30px,9vw,42px);font-weight:800;letter-spacing:-.02em;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1}
+  .result .cap{font-size:13.5px;color:#3f6b52;margin-top:6px}
+  .assume{font-size:11.5px;color:var(--muted);text-align:center;margin:10px 2px 0}
+
+  /* ---------- Features ---------- */
+  .feats{margin:44px auto 0;display:grid;gap:14px}
+  .feat{display:flex;gap:14px;align-items:flex-start}
+  .feat .ic{flex:0 0 40px;height:40px;border-radius:11px;background:var(--paper-2);display:flex;align-items:center;justify-content:center;font-size:20px}
+  .feat h4{margin:2px 0 3px;font-size:16px;font-weight:800}
+  .feat p{margin:0;font-size:14.5px;color:var(--muted)}
+
+  /* ---------- Footer ---------- */
+  footer{margin:52px auto 0;padding-top:26px;border-top:1px solid var(--line);text-align:center}
+  footer img{height:18px;opacity:.85;margin-bottom:12px}
+  footer p{font-size:12.5px;color:var(--muted);margin:0 0 6px}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <img src="assets/rung-wordmark.png" alt="RUNG">
+  </header>
+
+  <section class="hero">
+    <img class="mark" src="assets/rung-mark.png" alt="">
+    <div class="badge">Bald verfügbar · Sichere dir früh deinen Platz</div>
+    <h1>Sparen, das sich wie <span class="u">Gewinnen</span> anfühlt.</h1>
+    <p class="lede">Kein Budget. Keine Tabelle. Du trackst einfach, was du <em>nicht</em> ausgegeben hast — und siehst, wie daraus über die Jahre ein Vermögen wächst.</p>
+  </section>
+
+  <section class="signup" id="signup">
+    <h2>Sei von Anfang an dabei</h2>
+    <p class="sub">Trag dich für den frühen Zugang ein. Du erfährst als Erste:r, wenn RUNG startet — kein Spam, versprochen.</p>
+
+    <form id="waitlistForm" novalidate>
+      <div class="row">
+        <input type="email" id="email" name="email" placeholder="deine@email.de" autocomplete="email" inputmode="email" required>
+        <button type="submit" class="cta" id="submitBtn">Auf die Warteliste</button>
+      </div>
+      <!-- honeypot: bots fill this, humans never see it -->
+      <input class="hp" type="text" name="company" id="company" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="msg err" id="msg" role="alert"></div>
+    </form>
+
+    <p class="privacy">
+      Wir nutzen deine E-Mail nur, um dich über den Start von RUNG zu informieren.
+      Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>. Abmeldung jederzeit möglich.
+    </p>
+
+    <div class="success" id="success">
+      <div class="tick">✓</div>
+      <h2>Du bist dabei! 🎉</h2>
+      <p>Danke — du stehst auf der Warteliste. Wir melden uns, sobald RUNG für dich bereit ist.</p>
+    </div>
+  </section>
+
+  <div class="tf" id="tf">
+    <a id="tfLink" href="#">Schon jetzt reinschauen? Beta über TestFlight →</a>
+  </div>
+
+  <section class="calc">
+    <p class="eyebrow">Rechenbeispiel</p>
+    <h3>Was aus deinen kleinen Sparsiegen werden kann</h3>
+    <label>Was du täglich sparst <b><span id="dailyVal">4</span> €</b></label>
+    <input type="range" id="daily" min="1" max="15" step="1" value="4">
+    <div class="result">
+      <div class="big" id="future">–</div>
+      <div class="cap">in 20 Jahren — aus <span id="yearly">1.460 €</span> pro Jahr</div>
+    </div>
+    <p class="assume">Beispielrechnung bei angenommenen 5 % Rendite p. a. über 20 Jahre. Keine Anlageberatung.</p>
+  </section>
+
+  <section class="feats">
+    <div class="feat">
+      <div class="ic">🏆</div>
+      <div><h4>Sparsiege statt Verzicht</h4><p>Jeder ausgelassene Kauf ist ein Gewinn — kein schlechtes Gewissen, sondern ein Erfolg, den du feierst.</p></div>
+    </div>
+    <div class="feat">
+      <div class="ic">📈</div>
+      <div><h4>Sieh deine Zukunft wachsen</h4><p>RUNG zeigt dir sofort, was aus deinen Ersparnissen über die Jahre werden kann.</p></div>
+    </div>
+    <div class="feat">
+      <div class="ic">👫</div>
+      <div><h4>Gemeinsam sparen</h4><p>Spart zu zweit auf ein Ziel — jede Einzahlung zählt für euch beide, in Echtzeit.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <img src="assets/rung-wordmark.png" alt="RUNG">
+    <p>Sparen, das sich wie Gewinnen anfühlt.</p>
+    <p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
+  </footer>
+
+</div>
+
+<script>
+  // ---- Supabase waitlist config -----------------------------------------
+  const SUPABASE_URL = 'https://ykblaaedpqdvzzzdbfdp.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_q22ArO537uKrbjL0UBkblQ_5g-YJ4_4'; // publishable key — safe in client code
+  // Optional: paste your public TestFlight link here to show the beta button.
+  const TESTFLIGHT_URL = '';
+
+  // ---- TestFlight button (only shows if a link is set) ------------------
+  if (TESTFLIGHT_URL) {
+    document.getElementById('tf').style.display = 'block';
+    document.getElementById('tfLink').href = TESTFLIGHT_URL;
+  }
+
+  // ---- Projection calculator --------------------------------------------
+  const daily = document.getElementById('daily');
+  const fmtEur = n => new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+  function futureValue(perDay){
+    const monthly = perDay * 30.4375;      // avg days/month
+    const r = 0.05/12, n = 240;            // 5% p.a., 20 years, monthly
+    return monthly * ((Math.pow(1+r,n)-1)/r);
+  }
+  function renderCalc(){
+    const d = +daily.value;
+    document.getElementById('dailyVal').textContent = d;
+    document.getElementById('yearly').textContent = fmtEur(d*365);
+    document.getElementById('future').textContent = fmtEur(futureValue(d));
+  }
+  daily.addEventListener('input', renderCalc);
+  renderCalc();
+
+  // ---- Waitlist submit ---------------------------------------------------
+  const form = document.getElementById('waitlistForm');
+  const emailEl = document.getElementById('email');
+  const btn = document.getElementById('submitBtn');
+  const msg = document.getElementById('msg');
+  const card = document.getElementById('signup');
+
+  const isValidEmail = e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = '';
+    const email = emailEl.value.trim().toLowerCase();
+    if (!isValidEmail(email)) { msg.textContent = 'Bitte gib eine gültige E-Mail-Adresse ein.'; emailEl.focus(); return; }
+    // Honeypot: if filled, silently pretend success (it's a bot).
+    if (document.getElementById('company').value) { card.classList.add('done'); return; }
+
+    btn.disabled = true; btn.textContent = 'Moment …';
+    try {
+      const res = await fetch(SUPABASE_URL + '/rest/v1/waitlist', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          email,
+          locale: navigator.language || '',
+          source: 'landing',
+          referrer: document.referrer || '',
+          user_agent: navigator.userAgent || ''
+        })
+      });
+      // 201 = added. 409 = already on the list → treat both as success.
+      if (res.ok || res.status === 409) {
+        card.classList.add('done');
+      } else {
+        const t = await res.text().catch(()=> '');
+        console.error('waitlist error', res.status, t);
+        msg.textContent = 'Da ist etwas schiefgelaufen. Bitte versuch es gleich nochmal.';
+        btn.disabled = false; btn.textContent = 'Auf die Warteliste';
+      }
+    } catch (err) {
+      console.error(err);
+      msg.textContent = 'Keine Verbindung. Bitte prüf dein Internet und versuch es erneut.';
+      btn.disabled = false; btn.textContent = 'Auf die Warteliste';
+    }
+  });
+</script>
+</body>
+</html>
