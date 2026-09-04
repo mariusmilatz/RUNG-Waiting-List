@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>RUNG — Sparen, das sich wie Gewinnen anfühlt</title>
-<meta name="description" content="RUNG ist die App, die das Sparen umdreht: Du trackst, was du NICHT ausgegeben hast – und siehst, wie daraus über Jahre ein Vermögen wächst. Kein Budget, keine Tabelle. Jetzt auf die Warteliste.">
+<title>RUNG — Saving that feels like winning</title>
+<meta name="description" content="RUNG flips saving on its head: track what you DIDN'T spend and watch it grow into real money over the years. No budgets, no spreadsheets. Join the waitlist.">
 
 <!-- Social share card (WhatsApp, Instagram, iMessage previews) -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="RUNG — Sparen, das sich wie Gewinnen anfühlt">
-<meta property="og:description" content="Kein Budget, keine Tabelle. Tracke deine kleinen Sparsiege und sieh, wie dein Geld wächst. Sichere dir deinen frühen Zugang.">
+<meta property="og:title" content="RUNG — Saving that feels like winning">
+<meta property="og:description" content="No budgets, no spreadsheets. Track your small saving wins and watch your money grow. Get early access.">
 <meta property="og:image" content="assets/rung-mark.png">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -47,12 +47,17 @@
   .wrap{max-width:var(--maxw);margin:0 auto}
 
   /* ---------- Header ---------- */
-  header{display:flex;justify-content:center;padding:34px 0 8px}
-  header img{height:26px;width:auto}
+  header{position:relative;display:flex;justify-content:center;align-items:center;padding:30px 0 6px;min-height:56px}
+  header .brand{height:26px;width:auto}
+
+  /* language toggle */
+  .lang-toggle{position:absolute;top:24px;right:0;display:flex;gap:3px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px}
+  .lang-btn{border:0;background:none;font-family:var(--font);font-size:12.5px;font-weight:700;color:var(--muted);padding:5px 8px;border-radius:999px;cursor:pointer;line-height:1;display:flex;align-items:center;gap:4px}
+  .lang-btn.on{background:var(--ink);color:#fff}
+  .lang-btn .fl{font-size:13px}
 
   /* ---------- Hero ---------- */
-  .hero{text-align:center;padding:26px 0 8px}
-  .mark{height:104px;width:auto;margin:2px auto 22px;display:block}
+  .hero{text-align:center;padding:34px 0 8px}
   .badge{
     display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
     color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:6px 13px;margin-bottom:18px;
@@ -134,77 +139,80 @@
 <div class="wrap">
 
   <header>
-    <img src="assets/rung-wordmark.png" alt="RUNG">
+    <img class="brand" src="assets/rung-wordmark.png" alt="RUNG">
+    <div class="lang-toggle" role="group" aria-label="Language / Sprache">
+      <button class="lang-btn" data-lang="en" aria-label="English"><span class="fl">🇬🇧</span>EN</button>
+      <button class="lang-btn" data-lang="de" aria-label="Deutsch"><span class="fl">🇩🇪</span>DE</button>
+    </div>
   </header>
 
   <section class="hero">
-    <img class="mark" src="assets/rung-mark.png" alt="">
-    <div class="badge">Bald verfügbar · Sichere dir früh deinen Platz</div>
-    <h1>Sparen, das sich wie <span class="u">Gewinnen</span> anfühlt.</h1>
-    <p class="lede">Kein Budget. Keine Tabelle. Du trackst einfach, was du <em>nicht</em> ausgegeben hast — und siehst, wie daraus über die Jahre ein Vermögen wächst.</p>
+    <div class="badge" data-i18n="badge">Coming soon · Claim your early spot</div>
+    <h1 data-i18n="h1" data-i18n-html>Saving that feels like <span class="u">winning</span>.</h1>
+    <p class="lede" data-i18n="lede" data-i18n-html>No budgets. No spreadsheets. You just track what you <em>didn't</em> spend — and watch it grow into real money over the years.</p>
   </section>
 
   <section class="signup" id="signup">
-    <h2>Sei von Anfang an dabei</h2>
-    <p class="sub">Trag dich für den frühen Zugang ein. Du erfährst als Erste:r, wenn RUNG startet — kein Spam, versprochen.</p>
+    <h2 data-i18n="signup_h2">Be there from day one</h2>
+    <p class="sub" data-i18n="signup_sub">Join the early-access list. You'll be the first to know when RUNG launches — no spam, promise.</p>
 
     <form id="waitlistForm" novalidate>
       <div class="row">
-        <input type="email" id="email" name="email" placeholder="deine@email.de" autocomplete="email" inputmode="email" required>
-        <button type="submit" class="cta" id="submitBtn">Auf die Warteliste</button>
+        <input type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email" inputmode="email" required>
+        <button type="submit" class="cta" id="submitBtn" data-i18n="submit">Join the waitlist</button>
       </div>
       <!-- honeypot: bots fill this, humans never see it -->
       <input class="hp" type="text" name="company" id="company" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="msg err" id="msg" role="alert"></div>
     </form>
 
-    <p class="privacy">
-      Wir nutzen deine E-Mail nur, um dich über den Start von RUNG zu informieren.
-      Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>. Abmeldung jederzeit möglich.
+    <p class="privacy" data-i18n="privacy" data-i18n-html>
+      We'll only use your email to let you know when RUNG launches.
+      See our <a href="datenschutz.html">Privacy Policy</a>. Unsubscribe anytime.
     </p>
 
     <div class="success" id="success">
       <div class="tick">✓</div>
-      <h2>Du bist dabei! 🎉</h2>
-      <p>Danke — du stehst auf der Warteliste. Wir melden uns, sobald RUNG für dich bereit ist.</p>
+      <h2 data-i18n="success_h2">You're in! 🎉</h2>
+      <p data-i18n="success_p">Thanks — you're on the waitlist. We'll be in touch as soon as RUNG is ready for you.</p>
     </div>
   </section>
 
   <div class="tf" id="tf">
-    <a id="tfLink" href="#">Schon jetzt reinschauen? Beta über TestFlight →</a>
+    <a id="tfLink" href="#" data-i18n="tf">Want a sneak peek? Beta via TestFlight →</a>
   </div>
 
   <section class="calc">
-    <p class="eyebrow">Rechenbeispiel</p>
-    <h3>Was aus deinen kleinen Sparsiegen werden kann</h3>
-    <label>Was du täglich sparst <b><span id="dailyVal">4</span> €</b></label>
+    <p class="eyebrow" data-i18n="calc_eyebrow">Example</p>
+    <h3 data-i18n="calc_h3">What your small saving wins can turn into</h3>
+    <label><span data-i18n="calc_daily">What you save daily</span> <b><span id="dailyVal">4</span> €</b></label>
     <input type="range" id="daily" min="1" max="15" step="1" value="4">
     <div class="result">
       <div class="big" id="future">–</div>
-      <div class="cap">in 20 Jahren — aus <span id="yearly">1.460 €</span> pro Jahr</div>
+      <div class="cap" id="cap"></div>
     </div>
-    <p class="assume">Beispielrechnung bei angenommenen 5 % Rendite p. a. über 20 Jahre. Keine Anlageberatung.</p>
+    <p class="assume" data-i18n="assume">Example based on an assumed 7% return p.a. over 20 years. Not investment advice.</p>
   </section>
 
   <section class="feats">
     <div class="feat">
       <div class="ic">🏆</div>
-      <div><h4>Sparsiege statt Verzicht</h4><p>Jeder ausgelassene Kauf ist ein Gewinn — kein schlechtes Gewissen, sondern ein Erfolg, den du feierst.</p></div>
+      <div><h4 data-i18n="f1h">Wins, not sacrifice</h4><p data-i18n="f1p">Every purchase you skip is a win — no guilt, just a success worth celebrating.</p></div>
     </div>
     <div class="feat">
       <div class="ic">📈</div>
-      <div><h4>Sieh deine Zukunft wachsen</h4><p>RUNG zeigt dir sofort, was aus deinen Ersparnissen über die Jahre werden kann.</p></div>
+      <div><h4 data-i18n="f2h">See your future grow</h4><p data-i18n="f2p">RUNG instantly shows what your savings could become over the years.</p></div>
     </div>
     <div class="feat">
       <div class="ic">👫</div>
-      <div><h4>Gemeinsam sparen</h4><p>Spart zu zweit auf ein Ziel — jede Einzahlung zählt für euch beide, in Echtzeit.</p></div>
+      <div><h4 data-i18n="f3h">Save together</h4><p data-i18n="f3p">Save toward a goal as a pair — every deposit counts for both of you, in real time.</p></div>
     </div>
   </section>
 
   <footer>
     <img src="assets/rung-wordmark.png" alt="RUNG">
-    <p>Sparen, das sich wie Gewinnen anfühlt.</p>
-    <p><a href="impressum.html">Impressum</a> · <a href="datenschutz.html">Datenschutz</a></p>
+    <p data-i18n="foot_tag">Saving that feels like winning.</p>
+    <p><a href="impressum.html" data-i18n="foot_imp">Imprint</a> · <a href="datenschutz.html" data-i18n="foot_priv">Privacy</a></p>
   </footer>
 
 </div>
@@ -216,47 +224,152 @@
   // Optional: paste your public TestFlight link here to show the beta button.
   const TESTFLIGHT_URL = '';
 
+  // ---- Translations ------------------------------------------------------
+  const T = {
+    en: {
+      title: "RUNG — Saving that feels like winning",
+      badge: "Coming soon · Claim your early spot",
+      h1: 'Saving that feels like <span class="u">winning</span>.',
+      lede: "No budgets. No spreadsheets. You just track what you <em>didn't</em> spend — and watch it grow into real money over the years.",
+      signup_h2: "Be there from day one",
+      signup_sub: "Join the early-access list. You'll be the first to know when RUNG launches — no spam, promise.",
+      email_ph: "you@email.com",
+      submit: "Join the waitlist",
+      privacy: 'We\'ll only use your email to let you know when RUNG launches. See our <a href="datenschutz.html">Privacy Policy</a>. Unsubscribe anytime.',
+      success_h2: "You're in! 🎉",
+      success_p: "Thanks — you're on the waitlist. We'll be in touch as soon as RUNG is ready for you.",
+      tf: "Want a sneak peek? Beta via TestFlight →",
+      calc_eyebrow: "Example",
+      calc_h3: "What your small saving wins can turn into",
+      calc_daily: "What you save daily",
+      cap: "in 20 years — from {v} a year",
+      assume: "Example based on an assumed 7% return p.a. over 20 years. Not investment advice.",
+      f1h: "Wins, not sacrifice",
+      f1p: "Every purchase you skip is a win — no guilt, just a success worth celebrating.",
+      f2h: "See your future grow",
+      f2p: "RUNG instantly shows what your savings could become over the years.",
+      f3h: "Save together",
+      f3p: "Save toward a goal as a pair — every deposit counts for both of you, in real time.",
+      foot_tag: "Saving that feels like winning.",
+      foot_imp: "Imprint",
+      foot_priv: "Privacy",
+      msg_invalid: "Please enter a valid email address.",
+      msg_error: "Something went wrong. Please try again in a moment.",
+      msg_network: "No connection. Please check your internet and try again.",
+      busy: "One sec …",
+      locale: "en-GB"
+    },
+    de: {
+      title: "RUNG — Sparen, das sich wie Gewinnen anfühlt",
+      badge: "Bald verfügbar · Sichere dir früh deinen Platz",
+      h1: 'Sparen, das sich wie <span class="u">Gewinnen</span> anfühlt.',
+      lede: "Kein Budget. Keine Tabelle. Du trackst einfach, was du <em>nicht</em> ausgegeben hast — und siehst, wie daraus über die Jahre ein Vermögen wächst.",
+      signup_h2: "Sei von Anfang an dabei",
+      signup_sub: "Trag dich für den frühen Zugang ein. Du erfährst als Erste:r, wenn RUNG startet — kein Spam, versprochen.",
+      email_ph: "deine@email.de",
+      submit: "Auf die Warteliste",
+      privacy: 'Wir nutzen deine E-Mail nur, um dich über den Start von RUNG zu informieren. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>. Abmeldung jederzeit möglich.',
+      success_h2: "Du bist dabei! 🎉",
+      success_p: "Danke — du stehst auf der Warteliste. Wir melden uns, sobald RUNG für dich bereit ist.",
+      tf: "Schon jetzt reinschauen? Beta über TestFlight →",
+      calc_eyebrow: "Rechenbeispiel",
+      calc_h3: "Was aus deinen kleinen Sparsiegen werden kann",
+      calc_daily: "Was du täglich sparst",
+      cap: "in 20 Jahren — aus {v} pro Jahr",
+      assume: "Beispielrechnung bei angenommenen 7 % Rendite p. a. über 20 Jahre. Keine Anlageberatung.",
+      f1h: "Sparsiege statt Verzicht",
+      f1p: "Jeder ausgelassene Kauf ist ein Gewinn — kein schlechtes Gewissen, sondern ein Erfolg, den du feierst.",
+      f2h: "Sieh deine Zukunft wachsen",
+      f2p: "RUNG zeigt dir sofort, was aus deinen Ersparnissen über die Jahre werden kann.",
+      f3h: "Gemeinsam sparen",
+      f3p: "Spart zu zweit auf ein Ziel — jede Einzahlung zählt für euch beide, in Echtzeit.",
+      foot_tag: "Sparen, das sich wie Gewinnen anfühlt.",
+      foot_imp: "Impressum",
+      foot_priv: "Datenschutz",
+      msg_invalid: "Bitte gib eine gültige E-Mail-Adresse ein.",
+      msg_error: "Da ist etwas schiefgelaufen. Bitte versuch es gleich nochmal.",
+      msg_network: "Keine Verbindung. Bitte prüf dein Internet und versuch es erneut.",
+      busy: "Moment …",
+      locale: "de-DE"
+    }
+  };
+
+  // ---- Element refs ------------------------------------------------------
+  const emailEl = document.getElementById('email');
+  const btn = document.getElementById('submitBtn');
+  const msg = document.getElementById('msg');
+  const card = document.getElementById('signup');
+  const daily = document.getElementById('daily');
+  let curLang = 'en';
+
+  // ---- Language detection + apply ---------------------------------------
+  function detectLang(){
+    try {
+      const saved = localStorage.getItem('rung_lang');
+      if (saved === 'de' || saved === 'en') return saved;
+    } catch(e){}
+    // Default English, unless the user's PRIMARY browser/OS language is German.
+    // (We check only the top preference, so someone whose main language is
+    // English but who merely has German installed still gets English.)
+    const primary = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+    return /^de(-|$)/i.test(primary) ? 'de' : 'en';
+  }
+  function applyLang(lang){
+    curLang = (lang === 'de') ? 'de' : 'en';
+    const d = T[curLang];
+    document.documentElement.lang = curLang;
+    document.title = d.title;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const v = d[el.getAttribute('data-i18n')];
+      if (v == null) return;
+      if (el.hasAttribute('data-i18n-html')) el.innerHTML = v;
+      else el.textContent = v;
+    });
+    emailEl.placeholder = d.email_ph;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('on', b.dataset.lang === curLang));
+    if (!btn.disabled) btn.textContent = d.submit;
+    renderCalc();
+  }
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      try { localStorage.setItem('rung_lang', b.dataset.lang); } catch(e){}
+      applyLang(b.dataset.lang);
+    });
+  });
+
   // ---- TestFlight button (only shows if a link is set) ------------------
   if (TESTFLIGHT_URL) {
     document.getElementById('tf').style.display = 'block';
     document.getElementById('tfLink').href = TESTFLIGHT_URL;
   }
 
-  // ---- Projection calculator --------------------------------------------
-  const daily = document.getElementById('daily');
-  const fmtEur = n => new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+  // ---- Projection calculator (7% p.a., 20 years) ------------------------
+  function fmtEur(n){ return new Intl.NumberFormat(T[curLang].locale, {style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n); }
   function futureValue(perDay){
     const monthly = perDay * 30.4375;      // avg days/month
-    const r = 0.05/12, n = 240;            // 5% p.a., 20 years, monthly
+    const r = 0.07/12, n = 240;            // 7% p.a., 20 years, monthly
     return monthly * ((Math.pow(1+r,n)-1)/r);
   }
   function renderCalc(){
-    const d = +daily.value;
-    document.getElementById('dailyVal').textContent = d;
-    document.getElementById('yearly').textContent = fmtEur(d*365);
-    document.getElementById('future').textContent = fmtEur(futureValue(d));
+    const dval = +daily.value;
+    document.getElementById('dailyVal').textContent = dval;
+    document.getElementById('future').textContent = fmtEur(futureValue(dval));
+    document.getElementById('cap').textContent = T[curLang].cap.replace('{v}', fmtEur(dval*365));
   }
   daily.addEventListener('input', renderCalc);
-  renderCalc();
 
   // ---- Waitlist submit ---------------------------------------------------
   const form = document.getElementById('waitlistForm');
-  const emailEl = document.getElementById('email');
-  const btn = document.getElementById('submitBtn');
-  const msg = document.getElementById('msg');
-  const card = document.getElementById('signup');
-
   const isValidEmail = e => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e);
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     msg.textContent = '';
     const email = emailEl.value.trim().toLowerCase();
-    if (!isValidEmail(email)) { msg.textContent = 'Bitte gib eine gültige E-Mail-Adresse ein.'; emailEl.focus(); return; }
-    // Honeypot: if filled, silently pretend success (it's a bot).
-    if (document.getElementById('company').value) { card.classList.add('done'); return; }
+    if (!isValidEmail(email)) { msg.textContent = T[curLang].msg_invalid; emailEl.focus(); return; }
+    if (document.getElementById('company').value) { card.classList.add('done'); return; } // honeypot
 
-    btn.disabled = true; btn.textContent = 'Moment …';
+    btn.disabled = true; btn.textContent = T[curLang].busy;
     try {
       const res = await fetch(SUPABASE_URL + '/rest/v1/waitlist', {
         method: 'POST',
@@ -269,26 +382,27 @@
         body: JSON.stringify({
           email,
           locale: navigator.language || '',
-          source: 'landing',
+          source: 'landing:' + curLang,
           referrer: document.referrer || '',
           user_agent: navigator.userAgent || ''
         })
       });
-      // 201 = added. 409 = already on the list → treat both as success.
-      if (res.ok || res.status === 409) {
+      if (res.ok || res.status === 409) {      // 201 added, 409 already on list
         card.classList.add('done');
       } else {
-        const t = await res.text().catch(()=> '');
-        console.error('waitlist error', res.status, t);
-        msg.textContent = 'Da ist etwas schiefgelaufen. Bitte versuch es gleich nochmal.';
-        btn.disabled = false; btn.textContent = 'Auf die Warteliste';
+        console.error('waitlist error', res.status, await res.text().catch(()=> ''));
+        msg.textContent = T[curLang].msg_error;
+        btn.disabled = false; btn.textContent = T[curLang].submit;
       }
     } catch (err) {
       console.error(err);
-      msg.textContent = 'Keine Verbindung. Bitte prüf dein Internet und versuch es erneut.';
-      btn.disabled = false; btn.textContent = 'Auf die Warteliste';
+      msg.textContent = T[curLang].msg_network;
+      btn.disabled = false; btn.textContent = T[curLang].submit;
     }
   });
+
+  // ---- Init --------------------------------------------------------------
+  applyLang(detectLang());
 </script>
 </body>
 </html>
