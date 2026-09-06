@@ -190,7 +190,7 @@
   <section class="calc">
     <p class="eyebrow" data-i18n="calc_eyebrow">Example</p>
     <h3 data-i18n="calc_h3">What your small saving wins can turn into</h3>
-    <label><span data-i18n="calc_daily">What you save daily</span> <b><span id="dailyVal">4</span> €</b></label>
+    <label><span data-i18n="calc_daily">What you save daily</span> <b id="dailyOut">4 €</b></label>
     <input type="range" id="daily" min="1" max="15" step="1" value="4">
     <div class="result">
       <div class="big" id="future">–</div>
@@ -349,7 +349,19 @@
   }
 
   // ---- Projection calculator (7% p.a., 20 years) ------------------------
-  function fmtEur(n){ return new Intl.NumberFormat(T[curLang].locale, {style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n); }
+  // Currency follows the visitor's own device/browser locale (symbol only —
+  // the example amount stays the same; it's illustrative, not FX-converted).
+  function detectCurrency(){
+    let region='';
+    try{ const l=new Intl.Locale(navigator.language); region=(l.maximize&&l.maximize().region)||l.region||''; }
+    catch(e){ const m=(navigator.language||'').match(/-([A-Za-z]{2})/); region=m?m[1].toUpperCase():''; }
+    // Only currencies where a ~1–15/day "coffee" makes sense; everything else → EUR.
+    const map={GB:'GBP',US:'USD',CH:'CHF',CA:'CAD',AU:'AUD',NZ:'NZD'};
+    return map[region] || 'EUR';
+  }
+  const MONEY_CUR = detectCurrency();
+  const MONEY_LOC = navigator.language || 'de-DE';
+  function fmtMoney(n){ return new Intl.NumberFormat(MONEY_LOC,{style:'currency',currency:MONEY_CUR,maximumFractionDigits:0}).format(n); }
   function futureValue(perDay){
     const monthly = perDay * 30.4375;      // avg days/month
     const r = 0.07/12, n = 240;            // 7% p.a., 20 years, monthly
@@ -357,9 +369,9 @@
   }
   function renderCalc(){
     const dval = +daily.value;
-    document.getElementById('dailyVal').textContent = dval;
-    document.getElementById('future').textContent = fmtEur(futureValue(dval));
-    document.getElementById('cap').textContent = T[curLang].cap.replace('{v}', fmtEur(dval*365));
+    document.getElementById('dailyOut').textContent = fmtMoney(dval);
+    document.getElementById('future').textContent = fmtMoney(futureValue(dval));
+    document.getElementById('cap').textContent = T[curLang].cap.replace('{v}', fmtMoney(dval*365));
   }
   daily.addEventListener('input', renderCalc);
 
