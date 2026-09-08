@@ -349,15 +349,39 @@
   }
 
   // ---- Projection calculator (7% p.a., 20 years) ------------------------
-  // Currency follows the visitor's own device/browser locale (symbol only —
-  // the example amount stays the same; it's illustrative, not FX-converted).
-  function detectCurrency(){
+  // Currency follows WHERE the visitor is, not their app language — an
+  // English-speaking user in Germany should still see €. The device timezone
+  // is the best signal for physical location (language ≠ location); we fall
+  // back to the locale's region only if no timezone is available.
+  // Symbol only — the example amount stays the same, it's illustrative (not FX-converted).
+  const CUR_MAP = { GB:'GBP', US:'USD', CH:'CHF', CA:'CAD', AU:'AUD', NZ:'NZD' };
+  // IANA timezones (or their prefix) that map to a non-EUR currency; anything
+  // else in Europe — and any unrecognised zone — falls through to EUR.
+  const TZ_CUR = {
+    'Europe/London':'GBP','Europe/Belfast':'GBP','Europe/Guernsey':'GBP','Europe/Isle_of_Man':'GBP','Europe/Jersey':'GBP',
+    'Europe/Zurich':'CHF',
+    'Australia':'AUD','Pacific/Auckland':'NZD',
+    'America/Toronto':'CAD','America/Vancouver':'CAD','America/Edmonton':'CAD','America/Winnipeg':'CAD','America/Halifax':'CAD','America/St_Johns':'CAD',
+    'America':'USD' // North-American zones not matched above → USD
+  };
+  function currencyFromTZ(tz){
+    if(!tz) return '';
+    if(TZ_CUR[tz]) return TZ_CUR[tz];              // exact zone
+    if(tz.indexOf('Europe/')===0) return 'EUR';    // rest of Europe → €
+    if(tz.indexOf('Australia/')===0) return 'AUD';
+    if(tz.indexOf('America/')===0) return 'USD';   // remaining Americas → $ (illustrative)
+    return '';
+  }
+  function currencyFromLocale(){
     let region='';
     try{ const l=new Intl.Locale(navigator.language); region=(l.maximize&&l.maximize().region)||l.region||''; }
     catch(e){ const m=(navigator.language||'').match(/-([A-Za-z]{2})/); region=m?m[1].toUpperCase():''; }
-    // Only currencies where a ~1–15/day "coffee" makes sense; everything else → EUR.
-    const map={GB:'GBP',US:'USD',CH:'CHF',CA:'CAD',AU:'AUD',NZ:'NZD'};
-    return map[region] || 'EUR';
+    return CUR_MAP[region] || '';
+  }
+  function detectCurrency(){
+    let tz='';
+    try{ tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; }catch(e){}
+    return currencyFromTZ(tz) || currencyFromLocale() || 'EUR';
   }
   const MONEY_CUR = detectCurrency();
   const MONEY_LOC = navigator.language || 'de-DE';
